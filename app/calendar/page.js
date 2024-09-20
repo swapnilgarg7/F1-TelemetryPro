@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ChevronDown, ChevronUp, Home } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Calendar() {
     const [races, setRaces] = useState([]);
@@ -10,6 +14,8 @@ export default function Calendar() {
     const [error, setError] = useState(null);
     const [selectedRace, setSelectedRace] = useState(null);
     const [fetchingWinners, setFetchingWinners] = useState(false);
+    const containerRef = useRef(null);
+    const raceCardsRef = useRef([]);
 
     useEffect(() => {
         const fetchRaces = async () => {
@@ -28,6 +34,37 @@ export default function Calendar() {
 
         fetchRaces();
     }, []);
+
+    useEffect(() => {
+        if (!loading && containerRef.current) {
+            const headerElement = containerRef.current.querySelector('h1');
+
+            gsap.set(headerElement, { opacity: 0, y: -50 });
+            gsap.set(raceCardsRef.current, { opacity: 0, y: 50 });
+
+            gsap.to(headerElement, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "back.out(1.7)"
+            });
+
+            raceCardsRef.current.forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom-=50",
+                        end: "bottom top+=50",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+        }
+    }, [loading, races]);
 
     const fetchWinners = async (round) => {
         setFetchingWinners(true);
@@ -62,7 +99,6 @@ export default function Calendar() {
         );
     }
 
-
     if (error) {
         return <p className="text-center text-red-400">{error}</p>;
     }
@@ -88,13 +124,13 @@ export default function Calendar() {
     const upcomingRaceIndex = races.findIndex(race => new Date(race.date) > today);
 
     return (
-        <div className="min-h-screen p-8 sm:p-20 font-sans bg-gray-900 text-gray-100">
+        <div ref={containerRef} className="min-h-screen p-8 sm:p-20 font-sans bg-gray-900 text-gray-100">
             <div className="flex justify-between items-center mb-8">
                 <a href="/" className="text-blue-400 hover:text-blue-300 transition-colors duration-200">
                     <Home size={24} />
                 </a>
                 <h1 className="text-3xl font-bold text-center text-gray-100">F1 Race Calendar</h1>
-                <div className="w-6"></div> {/* This empty div balances the layout */}
+                <div className="w-6"></div>
             </div>
 
             <div className="grid grid-cols-1 gap-6">
@@ -108,6 +144,7 @@ export default function Calendar() {
                     return (
                         <div
                             key={race.round}
+                            ref={el => raceCardsRef.current[index] = el}
                             className={`p-6 border rounded-lg shadow-md transition-all duration-300
                                 ${isOver ? "bg-green-800 border-green-700 cursor-pointer" :
                                     isUpcoming ? "bg-blue-900 border-blue-700 opacity-90" :
