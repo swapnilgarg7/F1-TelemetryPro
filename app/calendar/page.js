@@ -20,7 +20,7 @@ const Calendar = () => {
     useEffect(() => {
         const fetchRaces = async () => {
             try {
-                const response = await axios.get("http://ergast.com/api/f1/current.json");
+                const response = await axios.get("https://ergast.com/api/f1/current.json");
                 const racesData = response.data.MRData.RaceTable.Races;
                 const sortedRaces = racesData.sort((a, b) => new Date(a.date) - new Date(b.date));
                 setRaces(sortedRaces);
