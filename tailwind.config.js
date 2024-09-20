@@ -7,6 +7,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        expand: 'expand 0.3s ease-out forwards',
+      },
+      keyframes: {
+        expand: {
+          '0%': { maxHeight: '0' },
+          '100%': { maxHeight: '200px' },
+        },
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
