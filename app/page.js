@@ -70,7 +70,7 @@ export default function Home() {
         </p>
         <ol ref={listRef} className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] text-gray-400">
           <li className="mb-2">
-            Start by selecting a race or car telemetry data
+            Start by selecting a car telemetry data
           </li>
           <li>Checkout the Race Calendar</li>
         </ol>

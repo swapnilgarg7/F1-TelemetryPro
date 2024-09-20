@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Home } from "lucide-react";
 import Link from 'next/link';
@@ -112,4 +112,10 @@ const CarDataPage = () => {
     );
 };
 
-export default CarDataPage;
+export default function PageWrapper() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-gray-900 text-white"><p>Loading telemetry data...</p></div>}>
+            <CarDataPage />
+        </Suspense>
+    );
+}
