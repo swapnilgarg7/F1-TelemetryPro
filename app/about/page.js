@@ -2,7 +2,7 @@
 
 export default function About() {
     return (
-        <div className="min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <div className="bg-gray-900 min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <h1 className="text-3xl font-bold text-center mb-8">About F1-TelemetryPro</h1>
             <p className="mb-4 text-lg">
                 Welcome to F1-TelemetryPro! This site is dedicated to providing F1 fans with real-time information and insights into the exciting world of Formula 1 racing.

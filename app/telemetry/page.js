@@ -45,8 +45,16 @@ export default function Telemetry() {
     }
 
     return (
-        <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <h1 className="text-2xl font-bold text-center mb-8">Telemetry Dashboard</h1>
+        <div className="bg-gray-900 min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <div className="flex justify-between items-center mb-8 flex-col">
+                <h1 className="text-2xl font-bold text-center mb-8">Telemetry Dashboard</h1>
+                <a
+                    href="/drivers"
+                    className="w-full max-w-xl rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-blue-600 text-white gap-2 hover:bg-blue-700 text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+                >
+                    View Drivers
+                </a>
+            </div>
 
             {telemetryData ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -90,7 +98,7 @@ export default function Telemetry() {
 
             <footer className="mt-16 text-center">
                 <a href="/" className="text-blue-500 hover:underline">
-                    Back to Dashboard
+                    Back to Home
                 </a>
             </footer>
         </div>
