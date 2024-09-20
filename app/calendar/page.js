@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ChevronDown, ChevronUp, Home } from "lucide-react";
 import { gsap } from "gsap";
@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Calendar() {
+const Calendar = () => {
     const [races, setRaces] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -193,5 +193,13 @@ export default function Calendar() {
                 </a>
             </footer>
         </div>
+    );
+}
+
+export default function PageWrapper() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-gray-900 text-white"><p>Loading telemetry data...</p></div>}>
+            <Calendar />
+        </Suspense>
     );
 }
